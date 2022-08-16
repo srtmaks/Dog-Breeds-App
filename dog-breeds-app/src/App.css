@@ -1,0 +1,11 @@
+.App {
+  width: 98%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.switcher {
+  display: flex;
+  align-self: flex-end;
+}
