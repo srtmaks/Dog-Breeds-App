@@ -7,6 +7,7 @@ import Switch from "@mui/material/Switch";
 import { styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import ButtonAppBar from "./components/Header/Header";
+import Voting from "./components/Voting/Voting";
 
 const darkTheme = createTheme({
   palette: {
@@ -100,6 +101,7 @@ function App() {
           </FormGroup>
         </div>
         <ButtonAppBar />
+        <Voting />
         <CssBaseline />
       </ThemeProvider>
     </div>

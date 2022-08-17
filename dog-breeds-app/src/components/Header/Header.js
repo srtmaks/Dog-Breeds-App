@@ -11,6 +11,7 @@ export default function ButtonAppBar() {
       sx={{
         flexGrow: 1,
         width: 0.5,
+        mb: 4,
       }}
     >
       <AppBar position="static" sx={{ borderRadius: 3 }} color="primary">
@@ -40,6 +41,7 @@ export default function ButtonAppBar() {
               sx={{ m: 0 }}
             >
               <Button>profile</Button>
+              <Button>breeds</Button>
               <Button>voting</Button>
             </ButtonGroup>
             <Button
