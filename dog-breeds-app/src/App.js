@@ -8,6 +8,10 @@ import { styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import ButtonAppBar from "./components/Header/Header";
 import Voting from "./components/Voting/Voting";
+import Registration from "./components/Log-Reg/Registration";
+import Login from "./components/Log-Reg/Login";
+import { Routes, Route, Navigate } from "react-router-dom";
+import HomePage from "./components/Log-Reg/HomePage";
 
 const darkTheme = createTheme({
   palette: {
@@ -100,8 +104,21 @@ function App() {
             />
           </FormGroup>
         </div>
-        <ButtonAppBar />
-        <Voting />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/voting"
+            element={
+              <>
+                <ButtonAppBar />
+                <Voting />
+              </>
+            }
+          />
+          <Route path="/registration" element={<Registration />} />
+        </Routes>
+
         <CssBaseline />
       </ThemeProvider>
     </div>
