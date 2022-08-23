@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { db } from "../../firebase";
 import { NavLink } from "react-router-dom";
@@ -22,6 +22,11 @@ export default function Registration() {
       name,
       email,
       password,
+      reactions: {
+        likes: ["likes"],
+        dislikes: ["dislikes"],
+        favourites: ["favourites"],
+      },
     });
     setName("");
     setEmail("");

@@ -9,18 +9,32 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+
+let suc = false;
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [votOrLog, setVotOrLog] = useState("");
 
-  const getInfo = async () => {
+  const checkPassword = async () => {
     const docRef = doc(db, "users", email);
     const docSnap = await getDoc(docRef);
+    let user = docSnap._document.data.value.mapValue.fields;
 
-    console.log("Document data:", docSnap._document.data.value.mapValue.fields);
+    if (password === user.password.stringValue) {
+      setVotOrLog("/voting");
+      await setDoc(doc(db, "logUsers", "logUser"), {
+        email,
+      });
+      setEmail("");
+      suc = true;
+    } else {
+      setVotOrLog("/login");
+      suc = false;
+    }
   };
 
   return (
@@ -52,7 +66,7 @@ export default function Login() {
               required
               id="email"
               label="Email"
-              color="warning"
+              color={suc ? "success" : "warning"}
               sx={{ width: 0.9 }}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -63,7 +77,7 @@ export default function Login() {
               label="Password"
               type="password"
               autoComplete="current-password"
-              color="warning"
+              color={suc ? "success" : "warning"}
               sx={{ width: 0.9 }}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -72,20 +86,33 @@ export default function Login() {
               variant="contained"
               aria-label="outlined primary button group"
               color="warning"
+              sx={{
+                width: 0.9,
+                display: "flex",
+                justifyContent: "space-between",
+                boxShadow: "none",
+              }}
             >
               <Button
                 onClick={() => {
-                  getInfo();
+                  checkPassword();
                 }}
               >
-                Login
-              </Button>
+                Submit
+              </Button>{" "}
+              <NavLink
+                replace
+                to={votOrLog}
+                style={{ textDecoration: "none", boxSizing: "border-box" }}
+              >
+                <Button color={suc ? "success" : "error"}>Login</Button>
+              </NavLink>
               <NavLink
                 replace
                 to="/registration"
                 style={{ textDecoration: "none", boxSizing: "border-box" }}
               >
-                <Button size="small" color="warning" sx={{ height: 1 }}>
+                <Button size="small" sx={{ height: 1 }}>
                   Registration
                 </Button>
               </NavLink>

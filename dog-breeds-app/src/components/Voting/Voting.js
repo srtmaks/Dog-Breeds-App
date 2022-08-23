@@ -9,10 +9,21 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { db } from "../../firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 
 export default function Voting() {
   const [imageUrl, setImageUrl] = useState();
+
+  let email = "";
+
+  const getLogUser = async () => {
+    const docRef = doc(db, "logUsers", "logUser");
+    const docSnap = await getDoc(docRef);
+    let logUser = docSnap._document.data.value.mapValue.fields;
+    email = logUser.email.stringValue;
+    return email;
+  };
+  getLogUser();
 
   const getImageUrl = async () => {
     const res = await fetch("https://api.thedogapi.com/v1/images/search");
@@ -25,9 +36,17 @@ export default function Voting() {
   }, []);
 
   const likeToStore = async (e) => {
-    await addDoc(collection(db, "images"), {
-      url: imageUrl,
-      reaction: "like",
+    //   // const user = doc(db, "users", email);
+    //   // setDoc(user, { url: imageUrl }, { reaction: "like" });
+    const user = doc(db, "users", email);
+    const docSnap = await getDoc(user);
+    let data =
+      docSnap._document.data.value.mapValue.fields.reactions.mapValue.fields
+        .likes.arrayValue.values;
+    console.log(data);
+
+    await updateDoc(user, {
+      reactions: data.push({ url: imageUrl }),
     });
   };
 

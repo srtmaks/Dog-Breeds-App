@@ -10,7 +10,7 @@ import ButtonAppBar from "./components/Header/Header";
 import Voting from "./components/Voting/Voting";
 import Registration from "./components/Log-Reg/Registration";
 import Login from "./components/Log-Reg/Login";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/Log-Reg/HomePage";
 
 const darkTheme = createTheme({
