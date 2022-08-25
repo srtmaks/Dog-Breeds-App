@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import { ButtonGroup } from "@mui/material";
 import Button from "@mui/material/Button";
+import { NavLink } from "react-router-dom";
 
 export default function ButtonAppBar() {
   return (
@@ -44,13 +45,19 @@ export default function ButtonAppBar() {
               <Button>breeds</Button>
               <Button>voting</Button>
             </ButtonGroup>
-            <Button
-              variant="outlined"
-              color="warning"
-              sx={{ height: "36.5px", m: 0 }}
+            <NavLink
+              replace
+              to="/login"
+              style={{ textDecoration: "none", boxSizing: "border-box" }}
             >
-              log out
-            </Button>
+              <Button
+                variant="outlined"
+                color="warning"
+                sx={{ height: "36.5px", m: 0 }}
+              >
+                log out
+              </Button>
+            </NavLink>
           </Box>
         </Toolbar>
       </AppBar>

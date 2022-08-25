@@ -9,7 +9,7 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { db } from "../../firebase";
-import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 
 export default function Voting() {
   const [imageUrl, setImageUrl] = useState();
@@ -36,31 +36,23 @@ export default function Voting() {
   }, []);
 
   const likeToStore = async (e) => {
-    //   // const user = doc(db, "users", email);
-    //   // setDoc(user, { url: imageUrl }, { reaction: "like" });
     const user = doc(db, "users", email);
-    const docSnap = await getDoc(user);
-    let data =
-      docSnap._document.data.value.mapValue.fields.reactions.mapValue.fields
-        .likes.arrayValue.values;
-    console.log(data);
-
     await updateDoc(user, {
-      reactions: data.push({ url: imageUrl }),
+      "reactions.likes": arrayUnion(imageUrl),
     });
   };
 
   const disLikeToStore = async (e) => {
-    await addDoc(collection(db, "images"), {
-      url: imageUrl,
-      reaction: "dislike",
+    const user = doc(db, "users", email);
+    await updateDoc(user, {
+      "reactions.dislikes": arrayUnion(imageUrl),
     });
   };
 
   const favToStore = async (e) => {
-    await addDoc(collection(db, "images"), {
-      url: imageUrl,
-      reaction: "favourite",
+    const user = doc(db, "users", email);
+    await updateDoc(user, {
+      "reactions.favourites": arrayUnion(imageUrl),
     });
   };
 

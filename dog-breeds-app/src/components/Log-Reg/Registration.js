@@ -23,9 +23,9 @@ export default function Registration() {
       email,
       password,
       reactions: {
-        likes: ["likes"],
-        dislikes: ["dislikes"],
-        favourites: ["favourites"],
+        likes: [],
+        dislikes: [],
+        favourites: [],
       },
     });
     setName("");
