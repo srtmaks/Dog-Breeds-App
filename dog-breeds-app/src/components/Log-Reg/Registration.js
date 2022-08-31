@@ -7,30 +7,42 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { db } from "../../firebase";
 import { NavLink } from "react-router-dom";
 
+let suc = false;
 export default function Registration() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
-    await setDoc(doc(db, "users", email), {
-      name,
-      email,
-      password,
-      reactions: {
-        likes: [],
-        dislikes: [],
-        favourites: [],
-      },
-    });
-    setName("");
-    setEmail("");
-    setPassword("");
+    const docRef = doc(db, "users", email);
+    const docSnap = await getDoc(docRef);
+    // let user = docSnap._document;
+    // .data.value.mapValue.fields;
+    console.log(docSnap._document);
+
+    if (docSnap._document === null) {
+      await setDoc(doc(db, "users", email), {
+        name,
+        email,
+        password,
+        reactions: {
+          likes: [],
+          dislikes: [],
+          favourites: [],
+        },
+      });
+      setName("");
+      setEmail("");
+      setPassword("");
+      suc = true;
+    } else {
+      suc = false;
+    }
   };
 
   return (
@@ -71,7 +83,7 @@ export default function Registration() {
               required
               id="email"
               label="Email"
-              color="warning"
+              color={suc ? "success" : "warning"}
               sx={{ width: 0.9 }}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -96,6 +108,7 @@ export default function Registration() {
                 onClick={() => {
                   handleSubmit();
                 }}
+                color={suc ? "success" : "warning"}
               >
                 Submit
               </Button>
