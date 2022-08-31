@@ -41,9 +41,21 @@ export default function ButtonAppBar() {
               aria-label="outlined primary button group"
               sx={{ m: 0 }}
             >
-              <Button>profile</Button>
+              <NavLink
+                replace
+                to="/profile"
+                style={{ textDecoration: "none", boxSizing: "border-box" }}
+              >
+                <Button>profile</Button>
+              </NavLink>
               <Button>breeds</Button>
-              <Button>voting</Button>
+              <NavLink
+                replace
+                to="/voting"
+                style={{ textDecoration: "none", boxSizing: "border-box" }}
+              >
+                <Button>voting</Button>
+              </NavLink>
             </ButtonGroup>
             <NavLink
               replace

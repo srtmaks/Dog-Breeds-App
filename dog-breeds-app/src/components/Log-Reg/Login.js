@@ -23,11 +23,12 @@ export default function Login() {
     const docRef = doc(db, "users", email);
     const docSnap = await getDoc(docRef);
     let user = docSnap._document.data.value.mapValue.fields;
-
+    let name = user.name.stringValue;
     if (password === user.password.stringValue) {
       setVotOrLog("/voting");
       await setDoc(doc(db, "logUsers", "logUser"), {
         email,
+        name,
       });
       setEmail("");
       suc = true;
