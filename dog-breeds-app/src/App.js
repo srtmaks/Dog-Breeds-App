@@ -13,6 +13,8 @@ import Login from "./components/Log-Reg/Login";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/Log-Reg/HomePage";
 import Profile from "./components/Profile/Profile";
+import Likes from "./components/Profile/Likes/Likes";
+import DisLikes from "./components/Profile/Dislikes/Dislikes";
 
 const darkTheme = createTheme({
   palette: {
@@ -126,6 +128,27 @@ function App() {
               </>
             }
           />
+          <Route
+            path="/profile/dislikes"
+            element={
+              <>
+                <ButtonAppBar />
+                <Profile />
+                <DisLikes />
+              </>
+            }
+          />
+          <Route
+            path="/profile/likes"
+            element={
+              <>
+                <ButtonAppBar />
+                <Profile />
+                <Likes />
+              </>
+            }
+          />
+
           <Route path="/registration" element={<Registration />} />
         </Routes>
 

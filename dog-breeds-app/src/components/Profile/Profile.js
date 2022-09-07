@@ -19,6 +19,8 @@ export default function Profile() {
   const [disLikesCount, setDislikesCount] = useState("");
   const [favsCount, setFavsCount] = useState("");
 
+  const [imagesArray, setImagesArray] = useState();
+
   const getProfile = async (e) => {
     const docRef = doc(db, "logUsers", "logUser");
     const docSnap = await getDoc(docRef);
@@ -40,6 +42,20 @@ export default function Profile() {
   };
 
   getReactions();
+
+  const getLikeImages = async () => {
+    const docRef = doc(db, "users", email);
+    const docSnap = await getDoc(docRef);
+    let likeImages =
+      docSnap._document.data.value.mapValue.fields.reactions.mapValue.fields
+        .likes.arrayValue.values;
+    setImagesArray(likeImages);
+  };
+
+  // useEffect(() => {
+  //   getLikeImages();
+  // }, []);
+  // getLikeImages();
 
   return (
     <Box
@@ -88,23 +104,28 @@ export default function Profile() {
             aria-label="outlined primary button group"
             color="warning"
           >
-            {/* <NavLink
-              replace
-              to="/login"
-              style={{ textDecoration: "none", boxSizing: "border-box" }}
-            > */}
-            <Button
-              size="small"
-              color="warning"
-              sx={{ height: 1 }}
-              onClick={() => {}}
-            >
-              likes: {likesCount}
-            </Button>
-            {/* </NavLink> */}
             <NavLink
               replace
-              to="/login"
+              to={{
+                pathname: "/profile/likes",
+              }}
+              state={imagesArray}
+              style={{ textDecoration: "none", boxSizing: "border-box" }}
+            >
+              <Button
+                size="small"
+                color="warning"
+                sx={{ height: 1 }}
+                onClick={() => {
+                  getLikeImages();
+                }}
+              >
+                likes: {likesCount}
+              </Button>
+            </NavLink>
+            <NavLink
+              replace
+              to="/profile/dislikes"
               style={{ textDecoration: "none", boxSizing: "border-box" }}
             >
               <Button size="small" color="warning" sx={{ height: 1 }}>
