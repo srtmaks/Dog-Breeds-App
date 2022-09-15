@@ -9,9 +9,9 @@ import {
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-export default function Likes(props) {
+export default function Favourites(props) {
   const [postsElements, setPostsElements] = useState([]);
 
   let location = useLocation();
@@ -23,7 +23,7 @@ export default function Likes(props) {
         location.state.map((p) => (
           <ListItem disablePadding>
             <ListItemIcon>
-              <ThumbUpIcon />
+              <FavoriteIcon />
             </ListItemIcon>
             <Card sx={{ maxWidth: 345 }}>
               <CardMedia component="img" src={p.stringValue} alt="dog photo" />

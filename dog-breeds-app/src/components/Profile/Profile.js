@@ -52,15 +52,27 @@ export default function Profile() {
     setImagesArray(likeImages);
   };
 
-  // useEffect(() => {
-  //   getLikeImages();
-  // }, []);
-  // getLikeImages();
+  const getDislikeImages = async () => {
+    const docRef = doc(db, "users", email);
+    const docSnap = await getDoc(docRef);
+    let likeImages =
+      docSnap._document.data.value.mapValue.fields.reactions.mapValue.fields
+        .dislikes.arrayValue.values;
+    setImagesArray(likeImages);
+  };
+
+  const getFavsImages = async () => {
+    const docRef = doc(db, "users", email);
+    const docSnap = await getDoc(docRef);
+    let likeImages =
+      docSnap._document.data.value.mapValue.fields.reactions.mapValue.fields
+        .favourites.arrayValue.values;
+    setImagesArray(likeImages);
+  };
 
   return (
     <Box
       sx={{
-        // flexGrow: 1,
         width: 0.5,
       }}
     >
@@ -125,19 +137,39 @@ export default function Profile() {
             </NavLink>
             <NavLink
               replace
-              to="/profile/dislikes"
+              to={{
+                pathname: "/profile/dislikes",
+              }}
+              state={imagesArray}
               style={{ textDecoration: "none", boxSizing: "border-box" }}
             >
-              <Button size="small" color="warning" sx={{ height: 1 }}>
+              <Button
+                size="small"
+                color="warning"
+                sx={{ height: 1 }}
+                onClick={() => {
+                  getDislikeImages();
+                }}
+              >
                 dislikes: {disLikesCount}
               </Button>
             </NavLink>
             <NavLink
               replace
-              to="/login"
+              to={{
+                pathname: "/profile/favourites",
+              }}
+              state={imagesArray}
               style={{ textDecoration: "none", boxSizing: "border-box" }}
             >
-              <Button size="small" color="warning" sx={{ height: 1 }}>
+              <Button
+                size="small"
+                color="warning"
+                sx={{ height: 1 }}
+                onClick={() => {
+                  getFavsImages();
+                }}
+              >
                 favourites: {favsCount}
               </Button>
             </NavLink>

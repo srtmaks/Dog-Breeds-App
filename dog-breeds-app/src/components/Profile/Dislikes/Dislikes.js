@@ -1,24 +1,39 @@
-import { Button, Card } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardMedia,
+  List,
+  ListItem,
+  ListItemIcon,
+} from "@mui/material";
 import { Box } from "@mui/system";
-import { doc, getDoc } from "firebase/firestore";
-import React, { Component, useState } from "react";
-// import { useLocation } from "react-router-dom";
-import { db } from "../../../firebase";
-// import LikeCard from "./LikeCard";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 
-export default function DisLikes() {
-  const [email, setEmail] = useState("");
-  const [images, setImages] = useState();
+export default function Dislikes(props) {
+  const [postsElements, setPostsElements] = useState([]);
 
-  //   let location = useLocation();
-  //   console.log(location);
+  let location = useLocation();
 
-  const getLogUser = async () => {
-    const docRef = doc(db, "logUsers", "logUser");
-    const docSnap = await getDoc(docRef);
-    let logUser = docSnap._document.data.value.mapValue.fields;
-    console.log(logUser.email.stringValue);
-    setEmail(logUser.email.stringValue);
+  const showCards = () => {
+    if (location.state !== null) {
+      console.log(location.state);
+      setPostsElements(
+        location.state.map((p) => (
+          <ListItem disablePadding>
+            <ListItemIcon>
+              <ThumbDownIcon />
+            </ListItemIcon>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardMedia component="img" src={p.stringValue} alt="dog photo" />
+            </Card>
+          </ListItem>
+        ))
+      );
+    } else {
+      console.log("errror");
+    }
   };
 
   return (
@@ -36,7 +51,14 @@ export default function DisLikes() {
           alignItems: "center",
         }}
       >
-        <div>Dislikes</div>
+        <Button
+          onClick={() => {
+            showCards();
+          }}
+        >
+          Show Cards
+        </Button>
+        <List>{postsElements}</List>
       </Card>
     </Box>
   );

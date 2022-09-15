@@ -15,6 +15,7 @@ import HomePage from "./components/Log-Reg/HomePage";
 import Profile from "./components/Profile/Profile";
 import Likes from "./components/Profile/Likes/Likes";
 import DisLikes from "./components/Profile/Dislikes/Dislikes";
+import Favourites from "./components/Profile/Favourtites/Favourites";
 
 const darkTheme = createTheme({
   palette: {
@@ -145,6 +146,16 @@ function App() {
                 <ButtonAppBar />
                 <Profile />
                 <Likes />
+              </>
+            }
+          />
+          <Route
+            path="/profile/favourites"
+            element={
+              <>
+                <ButtonAppBar />
+                <Profile />
+                <Favourites />
               </>
             }
           />
