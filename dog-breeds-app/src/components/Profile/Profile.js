@@ -19,8 +19,6 @@ export default function Profile() {
   const [disLikesCount, setDislikesCount] = useState("");
   const [favsCount, setFavsCount] = useState("");
 
-  const [imagesArray, setImagesArray] = useState();
-
   const getProfile = async (e) => {
     const docRef = doc(db, "logUsers", "logUser");
     const docSnap = await getDoc(docRef);
@@ -42,33 +40,6 @@ export default function Profile() {
   };
 
   getReactions();
-
-  const getLikeImages = async () => {
-    const docRef = doc(db, "users", email);
-    const docSnap = await getDoc(docRef);
-    let likeImages =
-      docSnap._document.data.value.mapValue.fields.reactions.mapValue.fields
-        .likes.arrayValue.values;
-    setImagesArray(likeImages);
-  };
-
-  const getDislikeImages = async () => {
-    const docRef = doc(db, "users", email);
-    const docSnap = await getDoc(docRef);
-    let likeImages =
-      docSnap._document.data.value.mapValue.fields.reactions.mapValue.fields
-        .dislikes.arrayValue.values;
-    setImagesArray(likeImages);
-  };
-
-  const getFavsImages = async () => {
-    const docRef = doc(db, "users", email);
-    const docSnap = await getDoc(docRef);
-    let likeImages =
-      docSnap._document.data.value.mapValue.fields.reactions.mapValue.fields
-        .favourites.arrayValue.values;
-    setImagesArray(likeImages);
-  };
 
   return (
     <Box
@@ -121,17 +92,10 @@ export default function Profile() {
               to={{
                 pathname: "/profile/likes",
               }}
-              state={imagesArray}
+              state={email}
               style={{ textDecoration: "none", boxSizing: "border-box" }}
             >
-              <Button
-                size="small"
-                color="warning"
-                sx={{ height: 1 }}
-                onClick={() => {
-                  getLikeImages();
-                }}
-              >
+              <Button size="small" color="warning" sx={{ height: 1 }}>
                 likes: {likesCount}
               </Button>
             </NavLink>
@@ -140,17 +104,10 @@ export default function Profile() {
               to={{
                 pathname: "/profile/dislikes",
               }}
-              state={imagesArray}
+              state={email}
               style={{ textDecoration: "none", boxSizing: "border-box" }}
             >
-              <Button
-                size="small"
-                color="warning"
-                sx={{ height: 1 }}
-                onClick={() => {
-                  getDislikeImages();
-                }}
-              >
+              <Button size="small" color="warning" sx={{ height: 1 }}>
                 dislikes: {disLikesCount}
               </Button>
             </NavLink>
@@ -159,17 +116,10 @@ export default function Profile() {
               to={{
                 pathname: "/profile/favourites",
               }}
-              state={imagesArray}
+              state={email}
               style={{ textDecoration: "none", boxSizing: "border-box" }}
             >
-              <Button
-                size="small"
-                color="warning"
-                sx={{ height: 1 }}
-                onClick={() => {
-                  getFavsImages();
-                }}
-              >
+              <Button size="small" color="warning" sx={{ height: 1 }}>
                 favourites: {favsCount}
               </Button>
             </NavLink>

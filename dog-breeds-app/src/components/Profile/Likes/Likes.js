@@ -10,18 +10,26 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 export default function Likes(props) {
   const [postsElements, setPostsElements] = useState([]);
 
   let location = useLocation();
 
-  const showCards = () => {
+  const showCards = async () => {
+    const docRef = doc(db, "users", location.state);
+    const docSnap = await getDoc(docRef);
+    let likeImages =
+      docSnap._document.data.value.mapValue.fields.reactions.mapValue.fields
+        .likes.arrayValue.values;
+
     if (location.state !== null) {
       console.log(location.state);
       setPostsElements(
-        location.state.map((p) => (
-          <ListItem disablePadding>
+        likeImages.map((p) => (
+          <ListItem disablePadding sx={{ mb: 2 }}>
             <ListItemIcon>
               <ThumbUpIcon />
             </ListItemIcon>
