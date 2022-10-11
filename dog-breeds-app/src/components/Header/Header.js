@@ -48,7 +48,14 @@ export default function ButtonAppBar() {
               >
                 <Button>profile</Button>
               </NavLink>
-              <Button>breeds</Button>
+              <NavLink
+                replace
+                to="/breeds"
+                style={{ textDecoration: "none", boxSizing: "border-box" }}
+              >
+                <Button>breeds</Button>
+              </NavLink>
+
               <NavLink
                 replace
                 to="/voting"

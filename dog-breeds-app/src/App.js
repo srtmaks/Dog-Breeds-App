@@ -16,6 +16,7 @@ import Profile from "./components/Profile/Profile";
 import Likes from "./components/Profile/Likes/Likes";
 import DisLikes from "./components/Profile/Dislikes/Dislikes";
 import Favourites from "./components/Profile/Favourtites/Favourites";
+import Breeds from "./Breeds/Breeds";
 
 const darkTheme = createTheme({
   palette: {
@@ -156,6 +157,16 @@ function App() {
                 <ButtonAppBar />
                 <Profile />
                 <Favourites />
+              </>
+            }
+          />
+
+          <Route
+            path="/breeds"
+            element={
+              <>
+                <ButtonAppBar />
+                <Breeds />
               </>
             }
           />
